@@ -31,15 +31,18 @@ function onGalleryContainerClick(evt) {
   const image = evt.target.dataset.source;
   const instance = basicLightbox.create(`
     <img src="${image}" width="800" height="600">
-`);
+`, {
+		onClose: (instance) => document.removeEventListener("keydown", onEscDown)
+	}
+  );
 
   instance.show();
   
-  document.addEventListener("keydown", onEscDown);
+document.addEventListener("keydown", onEscDown);
 
   function onEscDown(event) {
     if (event.code === "Escape") {
-      instance.close(() => document.removeEventListener("keydown", onEscDown));
+      instance.close();
     };
   }
 };
